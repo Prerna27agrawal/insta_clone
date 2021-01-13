@@ -8,8 +8,8 @@ const NavBar=()=>{
         <div className="nav-wrapper">
             <Link to="/"className="brand-logo left">Insta</Link>
             <ul id="nav-mobile"className="right">
-            <li><Link to="/signin">Login</Link></li>
-            <li><Link to="/signup">signup</Link></li>
+            <li><Link to="/signin">SignIn</Link></li>
+            <li><Link to="/signup">Signup</Link></li>
             <li><Link to="/profile">Profile</Link></li>
             <li><Link to="/create">CreatePost</Link></li>
             </ul>

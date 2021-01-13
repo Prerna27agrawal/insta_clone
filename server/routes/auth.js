@@ -7,6 +7,10 @@ const jwt= require('jsonwebtoken');
 const {JWT_SECRET}= require('../keys');
 const  requireLogin = require('../middleware/requireLogin');
 
+router.get("/",(req,res)=>{
+    res.send("hi");
+});
+
 router.get('/protected',requireLogin,(req,res)=>{
    res.send("hello user");
 });
@@ -52,7 +56,9 @@ router.post('/signin',(req,res)=>{
             if(doMatch){
                 // res.json({message:"successfully signed in"});
                 const token = jwt.sign({_id:savedUser._id},JWT_SECRET);
-                res.json({token:token});
+                const {_id,name,email} = savedUser
+                res.json({token:token,message:"successfully signed in",user:{_id,name
+                ,email }});
             }
             else{
                 return res.status(422).json({error:"Invalid email or password"});

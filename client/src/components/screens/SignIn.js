@@ -1,6 +1,41 @@
-import React from 'react';
-import {Link} from 'react-router-dom'
+import React,{useState} from 'react';
+import {Link,useHistory} from 'react-router-dom'
+import M from 'materialize-css';
 const SignIn =()=>{
+
+  const history=useHistory();
+  const[password,setPassword]= useState("");
+  const[email,setEmail]= useState("");
+
+  // for sending the post request to the server host
+   const PostData=()=>{
+    if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)){
+      return  M.toast({html:"Please fill valid email",classes:"#c62828 red darken-3"});
+    }
+    fetch("/signin",{
+      method:"post",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        password:password,
+        email:email
+      })
+    }).then(res=>res.json()).then(data=>{
+      console.log(data);
+      if(data.error){
+        M.toast({html:data.error,classes:"#c62828 red darken-3"});
+      }
+      else{
+        M.toast({html:data.message,classes:"#2e7d32 green darken-3"})
+        history.push('/');
+      }
+    }).catch(err=>{
+      console.log(err);
+    })
+   }
+
+
  return (
      <div className="mycard">
          <div className="card auth-card input-field ">
@@ -8,12 +43,16 @@ const SignIn =()=>{
             <input
             type="text"
             placeholder="email"
+            value={email}
+            onChange={(e)=> setEmail(e.target.value)}
             />
             <input 
             type="text"
             placeholder="password"
+            value={password}
+            onChange={(e)=> setPassword(e.target.value)}
             />
-            <button className="btn waves-effect waves-light #00796b teal darken-2">
+            <button onClick={()=>PostData()} className="btn waves-effect waves-light #00796b teal darken-2">
                Login
             </button>
             <h5>
