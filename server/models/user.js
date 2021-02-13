@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    pic:{
+      type:String,
+      default:"https://toppng.com/uploads/preview/app-icon-set-login-icon-comments-avatar-icon-11553436380yill0nchdm.png"
+    },
     followers:[{type:ObjectId, ref:"User"}],
     following:[{type:ObjectId,ref:"User"}]
 });
